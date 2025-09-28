@@ -1,2 +1,2 @@
 # Quiz-App
-Quiz app that generates random questions.
+A fun quiz app that generates random questions.
