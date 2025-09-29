@@ -15,6 +15,8 @@ const result= document.getElementById("result")
 function loadQuestion(){
   const q = questions[currentQuestion] //holds all the questions data in my quizData
   questionEle.textContent = `Q${currentQuestion + 1}. ${q.question}`
+  options.innerHTML = "", // this will clear the previous
+
   q.options.forEach((option, index) => {
     const btn = document.createElement("button")
     btn.classList.add("option-btn") // class for styling the options btn
@@ -45,5 +47,17 @@ function selectAnswer(index){
   nextBtn.style.display ="inline-block" //next button to display
 }
 
+//Add event listener for the next btn, so that we can move to next question
+nextBtn.addEventListener("click", ()=>{
+  //increment current question by 1 each time user clicks
+  currentQuestion++;
+
+  if(currentQuestion < questions.length){
+    //we load the questions again from the below function
+    loadQuestion();
+  }else{
+    //show the result
+  }
+})
 
 loadQuestion();
