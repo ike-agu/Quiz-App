@@ -58,7 +58,6 @@ body{
 }
 
 /* option btn styles */
-
 .option-btn{
   padding: 12px;
   background-color: rgb(222, 143, 5);
@@ -71,4 +70,13 @@ body{
 
 .option-btn:hover{
   background-color: rgb(136, 4, 151);
+}
+
+
+.option-btn.correct{
+  background-color: green;
+}
+
+.option-btn.wrong{
+  background-color: red;
 }
