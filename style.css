@@ -50,8 +50,25 @@ body{
   font-size: 16px;
 }
 
+/* timer styles */
 #timer{
   font-size: 25px;
   margin-bottom: 10px;
   color: rgb(136, 4, 151);
+}
+
+/* option btn styles */
+
+.option-btn{
+  padding: 12px;
+  background-color: rgb(222, 143, 5);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.option-btn:hover{
+  background-color: rgb(136, 4, 151);
 }
