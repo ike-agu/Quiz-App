@@ -32,7 +32,7 @@ function loadQuestion() {
     const btn = document.createElement("button")
     btn.classList.add("option-btn") // class for styling the options btn
     btn.textContent = option;
-    btn.addEventListener("click", () => selectAnswer(index))
+    btn.addEventListener("click", () => selectAnswer(index, true))
     options.appendChild(btn)
   });
 
@@ -45,7 +45,7 @@ function countdown(){
   updateTimer(); // this actually shows the timer reducing in the UI
   if(timeLeft === 0){
     clearInterval(timer) // always remember to stop the timer by clearing the interval
-    selectAnswer(questions[currentQuestion]?.correct)
+    selectAnswer(questions[currentQuestion]?.correct, false )
   }
 }
 
@@ -56,14 +56,15 @@ function updateTimer() {
 
 
 //select answer function
-function selectAnswer(index){
+function selectAnswer(index, shouldScoreByClick){
+  clearInterval(timer) // to stop the timer when an answer is selected.
   const q = questions[currentQuestion];
   const buttons = document.querySelectorAll(".option-btn")
 
   buttons.forEach(btn => btn.disabled = true);// once user selects 1 answer, the rest is disabled
 
   if(index === q.correct){
-    score++; //if answer is correct, score increments by 1
+    shouldScoreByClick && score++; //if user clicks correct answer, then score increments by 1. when timer selects for us, it does not increment our score
     buttons[index].classList.add("correct"); // style the correct answer
   }else{
     // style the wrong answer
