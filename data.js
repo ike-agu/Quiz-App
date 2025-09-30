@@ -25,4 +25,34 @@ export const quizData = [
     options: ["click", "submit", "change", "keydown"],
     correct: 2,
   },
+  {
+    question: "What does the DOM represent?",
+    options: [
+      "The design of the webpage",
+      "A CSS model",
+      "The structure of a Webpage in object form",
+      "A JavaScript Library",
+    ],
+    correct: 2,
+  },
+  {
+    question: "Which method selects the first element with a given class?",
+    options: [
+      "getElementByClassName()",
+      "getElementById()",
+      "querySelector()",
+      "querySelectorAll()",
+    ],
+    correct: 2,
+  },
+  {
+    question: "Which is the correct way to remove an element from the DOM?",
+    options: [
+      "element.delete()",
+      "document.clear(element)",
+      "remove.element()",
+      "element.remove()",
+    ],
+    correct: 3,
+  },
 ];
