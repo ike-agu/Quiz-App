@@ -19,7 +19,8 @@ const result= document.getElementById("result")
 function loadQuestion() {
 
   clearInterval(timer)// clear the interval always, else timer will run forever. Basically it stops the timer
-  timeLeft = 20;
+  timeLeft = 10;
+  updateTimer();// start the coundown visible in the UI
   timer = setInterval(countdown, 1000);
 
 
@@ -41,12 +42,16 @@ function loadQuestion() {
 //count down function
 function countdown(){
   timeLeft-- // reduces time left by 1 each time
-
+  updateTimer(); // this actually shows the timer reducing in the UI
   if(timeLeft === 0){
     clearInterval(timer) // always remember to stop the timer by clearing the interval
     selectAnswer(questions[currentQuestion]?.correct)
   }
+}
 
+//update timer function
+function updateTimer() {
+  timerEle.textContent = `⏰ ${timeLeft}`; // time left comes from counddown
 }
 
 
