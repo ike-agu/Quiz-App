@@ -4,7 +4,8 @@ import { quizData } from "./data.js";
 //create copy of questions and sort them randomly
 let questions = [...quizData].sort(() => Math.random() - 0.5);
 // console.log(questions[1])
-let currentQuestion = 0
+let currentQuestion = 0;
+let score = 0; //score variable will be incremented whe user gets the correct answer
 
 const questionEle = document.getElementById("questions")
 const options = document.getElementById("options")
@@ -12,10 +13,10 @@ const nextBtn = document.getElementById("next-btn")
 const timer = document.getElementById("timer")
 const result= document.getElementById("result")
 
-function loadQuestion(){
+function loadQuestion() {
   const q = questions[currentQuestion] //holds all the questions data in my quizData
   questionEle.textContent = `Q${currentQuestion + 1}. ${q.question}`
-  options.innerHTML = "", // this will clear the previous
+  options.innerHTML = "", // this will clear the previous element before new elements are shown
 
   q.options.forEach((option, index) => {
     const btn = document.createElement("button")
@@ -36,8 +37,8 @@ function selectAnswer(index){
   buttons.forEach(btn => btn.disabled = true);// once user selects 1 answer, the rest is disabled
 
   if(index === q.correct){
-    // style the correct answer
-    buttons[index].classList.add("correct");
+    score++; //if answer is correct, score increments by 1
+    buttons[index].classList.add("correct"); // style the correct answer
   }else{
     // style the wrong answer
     buttons[index].classList.add("wrong");
@@ -48,16 +49,46 @@ function selectAnswer(index){
 }
 
 //Add event listener for the next btn, so that we can move to next question
-nextBtn.addEventListener("click", ()=>{
+nextBtn.addEventListener("click", ()=> {
   //increment current question by 1 each time user clicks
   currentQuestion++;
-
   if(currentQuestion < questions.length){
     //we load the questions again from the below function
     loadQuestion();
   }else{
     //show the result
+    showResult()
   }
 })
+
+
+/*
+--------------to do in showResult()-----------
+- store the highest quiz score in the browser local storage
+- every time a user completes the quiz, we will show their score and the previous highest score
+- if user score is highest, we will remove previous highest score and store latest highest score in the local storage
+*/
+
+function showResult(){
+  nextBtn.style.display = "none";
+  const highScore = localStorage.getItem("quizHighScore") || 0;// if local storage has no value , assign it 0
+  const isNew = score > highScore; // highScore is the existing current high score. check If score is higher, if it is, it becomes the current new high score.
+
+  if(isNew){
+    localStorage.setItem("quizHighScore", score); // set the new value for the high score in local storage
+  }
+
+    //handle results
+    result.innerHTML = `
+    <h2>Hurray!!! You have completed the quiz</h2>
+    <p>You have scored ${score} out of ${questions.length} questions.</p>
+    <p>Highest score: ${Math.max(score, highScore)} </p>
+    ${isNew ? "<p>Hey, New High Score!</p>" : ""}
+
+    <button onclick="location.reload()">Restart Quiz</button>
+    `;
+    // <button onclick="location.reload()">Restart Quiz</button>  reloads the entire page to start from fresh
+
+}
 
 loadQuestion();
