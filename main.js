@@ -6,14 +6,23 @@ let questions = [...quizData].sort(() => Math.random() - 0.5);
 // console.log(questions[1])
 let currentQuestion = 0;
 let score = 0; //score variable will be incremented whe user gets the correct answer
+let timer; //. timer variable for set interval timer
+let timeLeft;
+
 
 const questionEle = document.getElementById("questions")
 const options = document.getElementById("options")
 const nextBtn = document.getElementById("next-btn")
-const timer = document.getElementById("timer")
+const timerEle = document.getElementById("timer")
 const result= document.getElementById("result")
 
 function loadQuestion() {
+
+  clearInterval(timer)// clear the interval always, else timer will run forever. Basically it stops the timer
+  timeLeft = 20;
+  timer = setInterval(countdown, 1000);
+
+
   const q = questions[currentQuestion] //holds all the questions data in my quizData
   questionEle.textContent = `Q${currentQuestion + 1}. ${q.question}`
   options.innerHTML = "", // this will clear the previous element before new elements are shown
@@ -29,7 +38,19 @@ function loadQuestion() {
   nextBtn.style.display = "none" // Hides next btn. Only shows when user select a question
 }
 
+//count down function
+function countdown(){
+  timeLeft-- // reduces time left by 1 each time
 
+  if(timeLeft === 0){
+    clearInterval(timer) // always remember to stop the timer by clearing the interval
+    selectAnswer(questions[currentQuestion]?.correct)
+  }
+
+}
+
+
+//select answer function
 function selectAnswer(index){
   const q = questions[currentQuestion];
   const buttons = document.querySelectorAll(".option-btn")
@@ -69,6 +90,7 @@ nextBtn.addEventListener("click", ()=> {
 - if user score is highest, we will remove previous highest score and store latest highest score in the local storage
 */
 
+//show result function
 function showResult(){
   nextBtn.style.display = "none";
   const highScore = localStorage.getItem("quizHighScore") || 0;// if local storage has no value , assign it 0
@@ -88,7 +110,6 @@ function showResult(){
     <button onclick="location.reload()">Restart Quiz</button>
     `;
     // <button onclick="location.reload()">Restart Quiz</button>  reloads the entire page to start from fresh
-
 }
 
 loadQuestion();
